@@ -1,0 +1,9 @@
+development:
+ host: 'localhost'
+ port: '6379'
+test:
+ host: 'localhost'
+ port: '6379'
+production:
+ host: 'intercom.f2mroq.0001.usw1.cache.amazonaws.com'
+ port: '6379'
