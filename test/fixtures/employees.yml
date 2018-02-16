@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uuid: MyString
+  name: MyString
+  role: MyString
+  isOwner: false
+
+two:
+  uuid: MyString
+  name: MyString
+  role: MyString
+  isOwner: false
