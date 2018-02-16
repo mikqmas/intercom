@@ -1,6 +1,6 @@
 class Api::MessagesController < ApplicationController
   def index
-    @messages = Message.all.order(`#{message_params.orderBy} #{message_params.direction}`).limit(message_params.limit).offset(message_params.offset)
+    @messages = Message.all.order(`#{message_params['orderBy']} #{message_params['direction']}`).limit(message_params['limit']).offset(message_params['offset'])
     if @messages
       render json: @messages
     else
@@ -15,7 +15,8 @@ class Api::MessagesController < ApplicationController
   end
 
   def create
-    @message = Message.create(message_params)
+    @employee = Employee.find_by_uuid(params['employee_id'])
+    @message = @employee.messages.new(message_params)
     if @message.save
       render json: @message
     else
@@ -28,6 +29,6 @@ class Api::MessagesController < ApplicationController
 
   private
   def message_params
-    params.permit(:body, :employee_id, :offset, :limit, :orderBy, :direction)
+    params.permit(:body, :offset, :limit, :orderBy, :direction)
   end
 end
