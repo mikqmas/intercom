@@ -1,6 +1,5 @@
 class Api::GroupsController < ApplicationController
   def index
-    debugger
     @employee = Employee.find_by_uuid(params['employee_id'])
     @groups = @employee.groups
     if @employee && !@groups.empty?
@@ -14,7 +13,6 @@ class Api::GroupsController < ApplicationController
   end
 
   def create
-    debugger
     @employee = Employee.find_by_uuid(params['employee_id'])
     @group = @employee.groups.new(group_params)
     if @employee && @group.save
