@@ -9,7 +9,7 @@ class Api::EmployeesController < ApplicationController
   end
 
   def show
-    @employee = Employee.find_by_uuid(employee_params['employee_id'])
+    @employee = Employee.find_by_uuid(params['id'])
     if @employee
       render json: @employee
     else
@@ -21,7 +21,7 @@ class Api::EmployeesController < ApplicationController
   end
 
   def create
-    @employee = Merchant.find_by_uuid(employee_params['merchant_id']).employees.new(employee_params)
+    @employee = Merchant.find_by_uuid(params['merchant_id']).employees.new(employee_params)
     if @employee.save
       render json: @employee
     else
@@ -30,7 +30,7 @@ class Api::EmployeesController < ApplicationController
   end
 
   def update
-    @employee = Employee.find_by_uuid(employoee_params['employee_id'])
+    @employee = Employee.find_by_uuid(params['id'])
     if @employee.update(employee_params)
       render json: @employee
     else
@@ -40,7 +40,7 @@ class Api::EmployeesController < ApplicationController
 
   private
   def employee_params
-    params.permit(:uuid, :name, :role, :isOwner, :merchant_id)
+    params.permit(:name, :role, :isOwner, :merchant_id)
   end
 
 end

@@ -1,6 +1,6 @@
 class Api::GroupsController < ApplicationController
   def index
-    @employee = Employee.find_by_uuid(group_params['employee_id'])
+    @employee = Employee.find_by_uuid(params['employee_id'])
     @groups = @employee.groups
     unless @groups.empty?
       render :index
@@ -13,7 +13,7 @@ class Api::GroupsController < ApplicationController
   end
 
   def create
-    @employee = Employee.find_by_uuid(group_params['employee_id'])
+    @employee = Employee.find_by_uuid(params['employee_id'])
     @group = @employee.groups.new(group_params)
     if @employee && @group.save
       render json: @group
