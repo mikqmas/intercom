@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180216082645) do
+ActiveRecord::Schema.define(version: 20180216200738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(version: 20180216082645) do
     t.string "name"
     t.string "role"
     t.boolean "isOwner"
-    t.string "merchant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "merchant_id"
     t.index ["merchant_id"], name: "index_employees_on_merchant_id"
     t.index ["name"], name: "index_employees_on_name"
     t.index ["uuid"], name: "index_employees_on_uuid", unique: true
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20180216082645) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "description", limit: 140
     t.index ["name"], name: "index_groups_on_name"
   end
 

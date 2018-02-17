@@ -9,7 +9,7 @@ class Api::EmployeesController < ApplicationController
   end
 
   def show
-    @employee = Employee.find_by_uuid(employee_params.uuid)
+    @employee = Employee.find_by_uuid(employee_params['employee_id'])
     if @employee
       render json: @employee
     else

@@ -3,7 +3,7 @@ class Api::GroupsController < ApplicationController
     @employee = Employee.find_by_uuid(group_params['employee_id'])
     @groups = @employee.groups
     unless @groups.empty?
-      render json: @groups
+      render :index
     else
       render json: @groups, status: 422
     end
