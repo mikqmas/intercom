@@ -1,5 +1,6 @@
 class Api::MessagesController < ApplicationController
   def index
+    @group = Group.find_by_id(params['group_id']);
     @messages = Message.all.order(`#{message_params['orderBy']} #{message_params['direction']}`).limit(message_params['limit']).offset(message_params['offset'])
     if @messages
       render json: @messages
@@ -29,6 +30,6 @@ class Api::MessagesController < ApplicationController
 
   private
   def message_params
-    params.permit(:body, :offset, :limit, :orderBy, :direction)
+    params.permit(:body, :offset, :limit, :orderBy, :direction, :group_id)
   end
 end
