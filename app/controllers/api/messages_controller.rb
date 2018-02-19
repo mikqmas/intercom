@@ -30,6 +30,6 @@ class Api::MessagesController < ApplicationController
 
   private
   def message_params
-    params.permit(:body, :offset, :limit, :orderBy, :direction, :group_id)
+    params.permit(:body, :offset, :limit, :orderBy, :direction, :group_id, :employee_name)
   end
 end
