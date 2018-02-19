@@ -2,6 +2,7 @@ class Api::GroupsController < ApplicationController
   def index
     @employee = Employee.find_by_uuid(params['employee_id'])
     @groups = @employee.groups
+    @groups = [@groups.where(name: group_params[:name])] if group_params[:name]
     if @employee && !@groups.empty?
       render :index
     else
@@ -10,14 +11,22 @@ class Api::GroupsController < ApplicationController
   end
 
   def show
+
   end
 
   def create
     @employee = Employee.find_by_uuid(params['employee_id'])
     @group = @employee.groups.new(group_params)
+    @employees = []
+    params['employees'].each do |employee|
+      @employees << Employee.where(uuid: employee['id'], name: employee['name'], merchant_id: Merchant.find_by_uuid(params['merchant_id']).id).first_or_create
+    end
     if @employee && @group.save
       @employee.groups << @group
-      render json: @group
+      @employees.each do |empl|
+        @group.employees << empl
+      end
+      render :show
     else
       render json: @group, status: 422
     end
@@ -25,6 +34,6 @@ class Api::GroupsController < ApplicationController
 
   private
   def group_params
-    params.permit(:name)
+    params.permit(:name, :employees)
   end
 end
