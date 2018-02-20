@@ -9,8 +9,7 @@ class Api::MessagesController < ApplicationController
       # @messages = Message.where(from_id: params[:from_id],to_id: params[:to_id])
     end
     if @messages
-      # messages being listed oldest first, thus reverse
-      render json: @messages.reverse
+      render json: @messages
     else
       render @messages.errors.full_message, status: 422
     end
