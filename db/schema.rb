@@ -10,70 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180220022356) do
+ActiveRecord::Schema.define(version: 20180216063957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "authtokens", force: :cascade do |t|
-    t.string "uuid"
+    t.string "token"
     t.bigint "merchant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["merchant_id"], name: "index_authtokens_on_merchant_id"
   end
 
-  create_table "employees", force: :cascade do |t|
-    t.string "uuid"
-    t.string "name"
-    t.string "role"
-    t.boolean "isOwner"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "merchant_id"
-    t.index ["merchant_id"], name: "index_employees_on_merchant_id"
-    t.index ["name"], name: "index_employees_on_name"
-    t.index ["uuid"], name: "index_employees_on_uuid", unique: true
-  end
-
-  create_table "employees_groups", id: false, force: :cascade do |t|
-    t.integer "employee_id"
-    t.integer "group_id"
-    t.index ["employee_id"], name: "index_employees_groups_on_employee_id"
-    t.index ["group_id", "employee_id"], name: "group_employee_un", unique: true
-    t.index ["group_id"], name: "index_employees_groups_on_group_id"
-  end
-
   create_table "groups", force: :cascade do |t|
-    t.string "name"
+    t.string "name", limit: 30
+    t.string "description", limit: 100
+    t.bigint "merchant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "description", limit: 140
-    t.string "group_type", limit: 50
-    t.index ["group_type"], name: "index_groups_on_group_type"
+    t.index ["merchant_id"], name: "index_groups_on_merchant_id"
     t.index ["name"], name: "index_groups_on_name"
   end
 
   create_table "merchants", force: :cascade do |t|
-    t.string "uuid"
-    t.string "name"
-    t.string "owner"
+    t.string "uuid", limit: 20
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_merchants_on_name"
     t.index ["uuid"], name: "index_merchants_on_uuid", unique: true
   end
 
   create_table "messages", force: :cascade do |t|
-    t.string "body", limit: 120
-    t.bigint "employee_id"
+    t.string "body", limit: 140
+    t.string "to_id", limit: 20
+    t.string "from_id", limit: 20
+    t.bigint "group_id"
+    t.bigint "merchant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "group_id"
-    t.string "employee_name", limit: 64
-    t.index ["employee_id"], name: "index_messages_on_employee_id"
+    t.index ["from_id"], name: "index_messages_on_from_id"
     t.index ["group_id"], name: "index_messages_on_group_id"
+    t.index ["merchant_id"], name: "index_messages_on_merchant_id"
+    t.index ["to_id"], name: "index_messages_on_to_id"
   end
 
-  add_foreign_key "messages", "employees"
 end

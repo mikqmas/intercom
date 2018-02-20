@@ -1,27 +1,18 @@
 class Api::MerchantsController < ApplicationController
   def show
-    @merchant = Merchant.find_by_uuid(params['id'])
+    @merchant = Merchant.where(uuid: merchant_params[:uuid]).first_or_create
     if @merchant
-      render json: @merchant
-    else
-      render json: @merchant , status: 422
-    end
-  end
-
-  def destroy
-  end
-
-  def create
-    @merchant = Merchant.new(merchant_params)
-    if @merchant.save
       render json: @merchant
     else
       render json: @merchant.errors.full_message, status: 422
     end
   end
 
+  def destroy
+  end
+
   private
   def merchant_params
-    params.permit(:uuid, :name, :owner)
+    params.permit(:uuid)
   end
 end
