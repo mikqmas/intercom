@@ -1,4 +1,4 @@
-json.(group, :id, :name, :description, :created_at, :updated_at)
+json.(group, :id, :name, :description, :group_type, :created_at, :updated_at)
 
 json.employees group.employees do |employee|
   json.uuid employee.uuid
