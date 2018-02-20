@@ -9,6 +9,7 @@ class Api::GroupsController < ApplicationController
   end
 
   def create
+    debugger
     @group = Merchant.find_by_uuid(params[:merchant_id]).groups.new(group_params)
 
     if @group.save

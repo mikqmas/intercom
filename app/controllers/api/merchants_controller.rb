@@ -1,6 +1,6 @@
 class Api::MerchantsController < ApplicationController
   def show
-    @merchant = Merchant.where(uuid: merchant_params[:uuid]).first_or_create
+    @merchant = Merchant.where(uuid: params[:id]).first_or_create
     if @merchant
       render json: @merchant
     else
@@ -9,10 +9,5 @@ class Api::MerchantsController < ApplicationController
   end
 
   def destroy
-  end
-
-  private
-  def merchant_params
-    params.permit(:uuid)
   end
 end
