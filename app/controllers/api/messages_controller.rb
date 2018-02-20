@@ -2,7 +2,7 @@ class Api::MessagesController < ApplicationController
   def index
     if(params[:group_id])
       group = Group.find_by_id(params[:group_id])
-      @messages = group.messages
+      @messages = group.messages.reverse
     else
       # @messages = Message.where(from_id: params[:from_id],to_id: params[:to_id])
       @messages = Message.where('(from_id=? AND to_id=?) OR (to_id=? AND from_id=?)', params[:from_id], params[:to_id], params[:from_id], params[:to_id])
