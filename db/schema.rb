@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180216063957) do
+ActiveRecord::Schema.define(version: 20180221010001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,23 @@ ActiveRecord::Schema.define(version: 20180216063957) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["merchant_id"], name: "index_authtokens_on_merchant_id"
+  end
+
+  create_table "employee_groups", force: :cascade do |t|
+    t.bigint "employee_id"
+    t.bigint "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employee_id"], name: "index_employee_groups_on_employee_id"
+    t.index ["group_id"], name: "index_employee_groups_on_group_id"
+  end
+
+  create_table "employees", force: :cascade do |t|
+    t.string "uuid", limit: 20
+    t.bigint "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_employees_on_group_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -54,4 +71,7 @@ ActiveRecord::Schema.define(version: 20180216063957) do
     t.index ["to_id"], name: "index_messages_on_to_id"
   end
 
+  add_foreign_key "employee_groups", "employees"
+  add_foreign_key "employee_groups", "groups"
+  add_foreign_key "employees", "groups"
 end
