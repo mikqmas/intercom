@@ -47,7 +47,7 @@ class Api::MessagesController < ApplicationController
     end
   end
 
-  def sendNotification(message)
+  def sendNotification
     @aId = 'ZTV4YF8S118QM'
     @mId = params[:merchant_id]
     @appSecret = 'a879d787-2258-0130-a591-43edd500fd89'
@@ -56,7 +56,7 @@ class Api::MessagesController < ApplicationController
 
     req.body = {
       "event": "create_message",
-      "data": message.to_json
+      "data": @message.to_json
     }.to_json
     req.content_type = 'application/json'
     res = Net::HTTP.start(uri.host, uri.port,
