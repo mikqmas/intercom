@@ -4,6 +4,7 @@ class CreateMessages < ActiveRecord::Migration[5.1]
       t.string :body, limit:140
       t.string :to_id, limit:20
       t.string :from_id, limit:20
+      t.boolean :seen, default: false
       t.references :group
       t.references :merchant
 

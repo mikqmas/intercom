@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20180221010001) do
     t.string "body", limit: 140
     t.string "to_id", limit: 20
     t.string "from_id", limit: 20
+    t.boolean "seen", default: false
     t.bigint "group_id"
     t.bigint "merchant_id"
     t.datetime "created_at", null: false
