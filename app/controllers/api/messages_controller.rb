@@ -3,6 +3,7 @@ require 'json'
 
 class Api::MessagesController < ApplicationController
   after_action :change_seen, only: [:index], unless: -> {@messages.empty?}
+  after_action :sendNotification, only: [:create], unless: -> {@message.nil?}
 
   def index
     if(params[:group_id])
@@ -30,7 +31,6 @@ class Api::MessagesController < ApplicationController
     @message = @merchant.messages.new(message_params)
     @message[:group_id] = params[:group_id]
     if @message.save
-      sendNotification(@message)
       render json: @message
     else
       render @message.errors.full_message, status: 422
@@ -48,7 +48,6 @@ class Api::MessagesController < ApplicationController
   end
 
   def sendNotification(message)
-    debugger
     @aId = 'ZTV4YF8S118QM'
     @mId = params[:merchant_id]
     @appSecret = 'a879d787-2258-0130-a591-43edd500fd89'
