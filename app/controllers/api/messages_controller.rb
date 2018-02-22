@@ -42,7 +42,7 @@ class Api::MessagesController < ApplicationController
   end
 
   def change_seen
-    @messages.reverse.each do |m|
+    @messages.each do |m|
       break if m.seen == true
       m.update_attributes(seen: true) if m.from_id == params[:to_id]
     end
