@@ -10,7 +10,9 @@ class Api::MessagesController < ApplicationController
       group = Group.find_by_id(params[:group_id])
       @messages = group.messages.reverse
     else
-      @messages = Message.where('(from_id=? AND to_id=?) OR (to_id=? AND from_id=?)', params[:from_id], params[:to_id], params[:from_id], params[:to_id])
+      @messages = Message
+      .where('(from_id=? AND to_id=?) OR (to_id=? AND from_id=?)', params[:from_id], params[:to_id], params[:from_id], params[:to_id])
+      .reverse
     end
     if @messages
       render json: @messages
