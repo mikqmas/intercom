@@ -42,8 +42,10 @@ class Api::MessagesController < ApplicationController
   end
 
   def change_seen
+    count = 0
     @messages.each do |m|
-      break if m.seen == true
+      count += 1 if m.seen == true
+      break if count > 3
       m.update_attributes(seen: true) if m.from_id == params[:to_id]
     end
   end
