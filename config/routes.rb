@@ -8,4 +8,6 @@ Rails.application.routes.draw do
       resources :messages, only: [:index, :create, :show]
     end
   end
+  get "/static/:page" => "static#show"
+  root "static#root"
 end
