@@ -8,11 +8,14 @@ class Api::MessagesController < ApplicationController
   def index
     if(params[:group_id])
       group = Group.find_by_id(params[:group_id])
-      @messages = group.messages
+      @messages = group.messages.order('created_at DESC').limit(50)
     else
       @messages = Message
       .where('(from_id=? AND to_id=?) OR (to_id=? AND from_id=?)', params[:from_id], params[:to_id], params[:from_id], params[:to_id])
+      .order('created_at DESC')
+      .limit(50)
     end
+    @messages = @messages.offset(params[:page].to_i) if params[:page] && params[:page].to_i >= 0
     if @messages
       render json: @messages
     else
